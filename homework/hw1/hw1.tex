@@ -1,0 +1,136 @@
+%=======================02-713 LaTeX template, following the 15-210 template==================
+%
+% You don't need to use LaTeX or this template, but you must turn your homework in as
+% a typeset PDF somehow.
+%
+% How to use:
+%    1. Update your information in section "A" below
+%    2. Write your answers in section "B" below. Precede answers for all 
+%       parts of a question with the command "\question{n}{desc}" where n is
+%       the question number and "desc" is a short, one-line description of 
+%       the problem. There is no need to restate the problem.
+%    3. If a question has multiple parts, precede the answer to part x with the
+%       command "\part{x}".
+%    4. If a problem asks you to design an algorithm, use the commands
+%       \algorithm, \correctness, \runtime to precede your discussion of the 
+%       description of the algorithm, its correctness, and its running time, respectively.
+%    5. You can include graphics by using the command \includegraphics{FILENAME}
+%
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{listings,xcolor}
+
+\colorlet{light-gray}{gray!10}
+\definecolor{javared}{rgb}{0.6,0,0} % for strings
+\definecolor{javagreen}{rgb}{0.25,0.5,0.35} % comments
+\definecolor{javapurple}{rgb}{0.5,0,0.35} % keywords
+\definecolor{javadocblue}{rgb}{0.25,0.35,0.75} % javadoc
+\definecolor{main-color}{rgb}{0.6627, 0.7176, 0.7764}
+\definecolor{back-color}{rgb}{0.1686, 0.1686, 0.1686}
+\definecolor{string-color}{rgb}{0.3333, 0.5254, 0.345}
+\definecolor{key-color}{rgb}{0.8, 0.47, 0.196}
+\definecolor{asparagus}{rgb}{0.53, 0.66, 0.42}
+\definecolor{azure(colorwheel)}{rgb}{0.0, 0.5, 1.0}
+\definecolor{ashgrey}{rgb}{0.7, 0.75, 0.71}
+
+\definecolor{shadecolor}{RGB}{150,150,150}
+
+\lstset{
+  language=Python,
+basicstyle=\small\ttfamily,
+keywordstyle=\color{javapurple}\bfseries,
+stringstyle=\color{javared},
+    keywordstyle = {\color{javapurple}},
+    keywordstyle = [2]{\color{asparagus}},
+    keywordstyle = [3]{\color{azure(colorwheel)}},
+    keywordstyle = [4]{\color{teal}},
+    otherkeywords = {;,:,@@,|,->,>>=,val},
+    morekeywords = [2]{;,:,*,@@},
+    morekeywords = [3]{->,|},
+    morekeywords = [4]{>>=},
+commentstyle=\color{javagreen},
+morecomment=[s][\color{javadocblue}]{(*}{*)},
+numbers=left,
+numberstyle=\tiny\color{black},
+stepnumber=2,
+numbersep=10pt,
+tabsize=4,
+showspaces=false,
+showstringspaces=false,
+escapeinside={(*@}{@*)},
+% frame=single,
+backgroundcolor=\color{light-gray},
+frame=lines}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\setlength{\headheight}{13.6pt}
+\newcommand\question[2]{\vspace{.25in}\hrule\textbf{#1: #2}\vspace{.5em}\hrule\vspace{.10in}}
+\renewcommand\part[1]{\vspace{.10in}\textbf{(#1)}\par}
+\newcommand\algorithm{\vspace{.10in}\textbf{Algorithm: }}
+\newcommand\correctness{\vspace{.10in}\textbf{Correctness: }}
+\newcommand\runtime{\vspace{.10in}\textbf{Running time: }}
+\pagestyle{fancyplain}
+\lhead{\textbf{\NAME}}
+\chead{\textbf{{\COURSE} Homework \HWNUM}}
+\rhead{\today}
+\begin{document}
+%Section A==============Change the values below to match your information==================
+\newcommand\NAME{Eric Altenburg}  % your name
+\newcommand\COURSE{CS-306}
+\newcommand\HWNUM{1}              % the homework number
+\newcommand{\bigO}{\mathcal{O}}
+%Section B==============Put your answers to the questions below here=======================
+
+% no need to restate the problem --- the graders know which problem is which,
+% but replacing "The First Problem" with a short phrase will help you remember
+% which problem this is when you read over your homeworks to study.
+
+\begin{center}
+	\textit{\textbf{Pledge:} I pledge my honor that I have abided by the Stevens Honor System.} - \textbf{\NAME}
+\end{center}
+
+\question{Problem 1}{Shared or forgotten keys? \newline Long ago, Alice and Bob shared an $n$-bit secret key but not they are no longer sure they still possess the same key. To verify that the key $k_a$ currently held by Alice is the same as the key $k_b$ currently held by Bob, they need to communicate over an insecure channel.}
+	\part{1}
+		\begin{enumerate}
+			\item Confidentiality: This is relevant because since they are using an insecure channel now, an attacker, say Eve, can eavesdrop on their conversation now and figure out the key. If confidentiality is thus considered, then Eve will be less likely to find the key.
+			\item Integrity: The key is going to be used for all of their communications, therefore, it is important that it is secure or else all of their messages are not going to be secure.
+		\end{enumerate}
+	\part{2}
+		For this case, the property of confidentiality is not satisfied. Alice generates the $n$-bit value $r$ which is random, then performs an $\oplus$ and sends the result to Bob. If there is an attacker, Eve, who is listening, then she can perform the same operation as Bob and obtain her own key. Integrity is also not satisfied because if their key was compromised as mentioned previously, then none of their messages are secure anymore.
+
+\question{Problem 2}{Perfect or imperfect ciphers?}
+	\part{1} 
+		\begin{enumerate}
+			\item $t=1$: The algorithm is insecure because an attacker can easily brute force it. This has a similar structure to a simple cipher where the first and second characters could be used and the difference between the two can give an attacker the information they need.
+			\item $t=2$: Because there are only two passwords where $ab$ and $cd$ are at most two letters apart or $be$ and $dg$ are at most two letters apart as well, an attacker can pick one password or the other. Since the key repeats itself every two letters, it is equally likely for both passwords to be used, and so it is easy to figure out which one is being used for a shift in the cipher.
+			\item $t=3$: This means there are two patterns: \textit{x, y, z, $x + 3$} or \textit{x, y, z, $x+5$}. Because there are only two passwords, an attacker can easily figure out the passwords.
+			\item $t=4$: Both passwords are of length four, therefore, the attacker does not gain any new information.
+		\end{enumerate}
+
+	\newpage 
+
+	\part{2}
+		A mono-alphabetic substitution cipher is trivial to break because a chosen-plaintext attack consisting of 25 letters can be used to figure out the key. With this, the attacker can then crack the cipher and then be able to decrypt all future messages. The reason behind this is because there are 26 distinct letters that will correspond to some other letter, and so 25 letters is all that is needed because the $26^{th}$ letter would be the only one left with the process of elimination. The shortest single-message plaintext that is a valid English message that can recover the key is \textit{jived fox nymph grabs quick waltz}. This mono-alphabetic substitution cipher would only be perfectly secure against a cipher-text only attacker if the probability that the mapping of the letters and the ciphertext are equally as likely to occur.
+
+\question{Problem 3}{Crypt-analyze this!}
+	The text reads:
+	\begin{itemize}
+		\item Testing testing can you read this
+		\item Yep I can read you perfectly fine
+		\item Awesome one time pad is working
+		\item Yay we can make fun of Nikos now
+		\item I hope no student can read this
+		\item That would be quite embarrassing
+		\item Luckily OTP is perfectly secure
+		\item Didnt Nikos say there was a catch
+		\item Maybe but I didnt pay attention
+		\item We should really listen to Nikos
+		\item Nah we are doing fine without him
+	\end{itemize}
+	To successfully decipher this, I took the XOR of the first 2 ciphertexts. Then using crib dragging, I would use a guess word to go over the XOR to see if I can see if any probable ciphertext can be found. This gave me a single plaintext and the 2 initial ciphertexts, then I did another XOR between them to get the key. To get the rest of the words, I mapped the key over the rest of the ciphertexts to produce the rest of the messages with the help of an ASCII converter. The key is \textit{youfoundthekey!congratulations!!!}. 
+
+\end{document}

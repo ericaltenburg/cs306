@@ -1,0 +1,121 @@
+%=======================02-713 LaTeX template, following the 15-210 template==================
+%
+% You don't need to use LaTeX or this template, but you must turn your homework in as
+% a typeset PDF somehow.
+%
+% How to use:
+%    1. Update your information in section "A" below
+%    2. Write your answers in section "B" below. Precede answers for all 
+%       parts of a question with the command "\question{n}{desc}" where n is
+%       the question number and "desc" is a short, one-line description of 
+%       the problem. There is no need to restate the problem.
+%    3. If a question has multiple parts, precede the answer to part x with the
+%       command "\part{x}".
+%    4. If a problem asks you to design an algorithm, use the commands
+%       \algorithm, \correctness, \runtime to precede your discussion of the 
+%       description of the algorithm, its correctness, and its running time, respectively.
+%    5. You can include graphics by using the command \includegraphics{FILENAME}
+%
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{listings,xcolor}
+
+\colorlet{light-gray}{gray!10}
+\definecolor{javared}{rgb}{0.6,0,0} % for strings
+\definecolor{javagreen}{rgb}{0.25,0.5,0.35} % comments
+\definecolor{javapurple}{rgb}{0.5,0,0.35} % keywords
+\definecolor{javadocblue}{rgb}{0.25,0.35,0.75} % javadoc
+\definecolor{main-color}{rgb}{0.6627, 0.7176, 0.7764}
+\definecolor{back-color}{rgb}{0.1686, 0.1686, 0.1686}
+\definecolor{string-color}{rgb}{0.3333, 0.5254, 0.345}
+\definecolor{key-color}{rgb}{0.8, 0.47, 0.196}
+\definecolor{asparagus}{rgb}{0.53, 0.66, 0.42}
+\definecolor{azure(colorwheel)}{rgb}{0.0, 0.5, 1.0}
+\definecolor{ashgrey}{rgb}{0.7, 0.75, 0.71}
+
+\definecolor{shadecolor}{RGB}{150,150,150}
+
+\lstset{
+  language=Python,
+basicstyle=\small\ttfamily,
+keywordstyle=\color{javapurple}\bfseries,
+stringstyle=\color{javared},
+    keywordstyle = {\color{javapurple}},
+    keywordstyle = [2]{\color{asparagus}},
+    keywordstyle = [3]{\color{azure(colorwheel)}},
+    keywordstyle = [4]{\color{teal}},
+    otherkeywords = {;,:,@@,|,->,>>=,val},
+    morekeywords = [2]{;,:,*,@@},
+    morekeywords = [3]{->,|},
+    morekeywords = [4]{>>=},
+commentstyle=\color{javagreen},
+morecomment=[s][\color{javadocblue}]{(*}{*)},
+numbers=left,
+numberstyle=\tiny\color{black},
+stepnumber=2,
+numbersep=10pt,
+tabsize=4,
+showspaces=false,
+showstringspaces=false,
+escapeinside={(*@}{@*)},
+% frame=single,
+backgroundcolor=\color{light-gray},
+frame=lines}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\setlength{\headheight}{13.6pt}
+\newcommand\question[2]{\vspace{.25in}\hrule\textbf{#1: #2}\vspace{.5em}\hrule\vspace{.10in}}
+\renewcommand\part[1]{\vspace{.10in}\textbf{(#1)}\par}
+\newcommand\algorithm{\vspace{.10in}\textbf{Algorithm: }}
+\newcommand\correctness{\vspace{.10in}\textbf{Correctness: }}
+\newcommand\runtime{\vspace{.10in}\textbf{Running time: }}
+\pagestyle{fancyplain}
+\lhead{\textbf{\NAME}}
+\chead{\textbf{{\COURSE} Homework \HWNUM}}
+\rhead{\today}
+\begin{document}
+%Section A==============Change the values below to match your information==================
+\newcommand\NAME{Eric Altenburg}  % your name
+\newcommand\COURSE{CS-306}
+\newcommand\HWNUM{1 \textit{Corrections}}              % the homework number
+\newcommand{\bigO}{\mathcal{O}}
+%Section B==============Put your answers to the questions below here=======================
+
+% no need to restate the problem --- the graders know which problem is which,
+% but replacing "The First Problem" with a short phrase will help you remember
+% which problem this is when you read over your homeworks to study.
+
+\begin{center}
+	\textit{\textbf{Pledge:} I pledge my honor that I have abided by the Stevens Honor System.} - \textbf{\NAME}
+\end{center}
+
+% - further explanation given that you used an online tool rather than implementing your own code.
+% - How did you guess your crib words?
+% - What does "probably ciphertext" mean?
+% - How does probability factor into your solution, if at all?
+
+\question{Problem 3}{Crypt-analyze this!}
+	The text reads:
+	\begin{enumerate}
+		\item Testing testing can you read this
+		\item Yep I can read you perfectly fine
+		\item Awesome one time pad is working
+		\item Yay we can make fun of Nikos now
+		\item I hope no student can read this
+		\item That would be quite embarrassing
+		\item Luckily OTP is perfectly secure
+		\item Didnt Nikos say there was a catch
+		\item Maybe but I didnt pay attention
+		\item We should really listen to Nikos
+		\item Nah we are doing fine without him
+	\end{enumerate}
+	To successfully decipher this, I used crib dragging which has been implemented many times by other programmers online. Here is the website I used specifically: \href{https://toolbox.lotusfa.com/crib_drag/}{https://toolbox.lotusfa.com/crib\_drag/}. This website requires that I input 2 ciphertexts and then some crib words. The latter is rather difficult without the context of the ciphertexts and relies on some probability with you knowing which words to use for the crib; however, given this circumstance, Alice and Bob were likely talking about Nikos since he thinks they were planning behind his back. So with this information, "Nikos" was the initial crib I used. 
+
+	After obtaining the plaintext, I then XOR'd it with the ciphertexts to obtain the key. Then to get the rest of the words I used this XOR calculator \href{http://xor.pw/#}{http://xor.pw/\#} where I changed the input 1 to be ASCII (base 256), input 2 to be hex (base 16), and the output to be ASCII (base 256). I put in the key as input 1, and each of the ciphertexts for input 2 and I got the respective plaintexts. The key is \textit{youfoundthekey!congratulations!!!}. 
+
+\end{document}

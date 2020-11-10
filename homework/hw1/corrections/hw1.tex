@@ -100,22 +100,69 @@ frame=lines}
 % - How does probability factor into your solution, if at all?
 
 \question{Problem 3}{Crypt-analyze this!}
-	The text reads:
-	\begin{enumerate}
-		\item Testing testing can you read this
-		\item Yep I can read you perfectly fine
-		\item Awesome one time pad is working
-		\item Yay we can make fun of Nikos now
-		\item I hope no student can read this
-		\item That would be quite embarrassing
-		\item Luckily OTP is perfectly secure
-		\item Didnt Nikos say there was a catch
-		\item Maybe but I didnt pay attention
-		\item We should really listen to Nikos
-		\item Nah we are doing fine without him
-	\end{enumerate}
+	% The text reads:
+	% \begin{enumerate}
+	% 	\item Testing testing can you read this
+	% 	\item Yep I can read you perfectly fine
+	% 	\item Awesome one time pad is working
+	% 	\item Yay we can make fun of Nikos now
+	% 	\item I hope no student can read this
+	% 	\item That would be quite embarrassing
+	% 	\item Luckily OTP is perfectly secure
+	% 	\item Didnt Nikos say there was a catch
+	% 	\item Maybe but I didnt pay attention
+	% 	\item We should really listen to Nikos
+	% 	\item Nah we are doing fine without him
+	% \end{enumerate}
+	The ciphertexts and their corresponding plaintexts are as follows:
+	\begin{center}
+	\begin{tabular}{|l l|}
+		\hline
+		c$_1$ & 2d0a0612061b0944000d161f0c1746430c0f0952181b004c1311080b4e07494852\\
+		p$_1$ & Testing testing can you read this\\
+		\hline
+		c$_2$ & 200a054626550d051a48170e041d011a001b470204061309020005164e15484f44\\
+		p$_2$ & Yep I can read you perfectly fine\\
+		\hline
+		c$_3$ & 3818101500180b441b06004b11104c064f1e0616411d064c161b1b04071d460101\\
+		p$_3$ & Awesome one time pad is working\\
+		\hline
+		c$_4$ & 200e0c4618104e071506450604124443091b09520e125522081f061c4e1d4e5601\\
+		p$_4$ & Yay we can make fun of Nikos now\\
+		\hline
+		c$_5$ & 304f1d091f104e0a1b48161f101d440d1b4e04130f5407090010491b061a520101\\
+		p$_5$ & I hope no student can read this\\
+		\hline
+		c$_6$ & 2d0714124f020111180c450900595016061a02520419170d1306081c1d1a4f4601\\
+		p$_6$ & That would be quite embarrassing\\
+		\hline
+		c$_7$ & 351a160d061917443b3c354b0c0a01130a1c01170200191541070c0c1b01440101\\
+		p$_7$ & Luckily OTP is perfectly secure\\
+		\hline
+		c$_8$ & 3d0611081b55200d1f07164b161858431b0602000454020d1254084f0d12554249\\
+		p$_8$ & Didnt Nikos say there was a catch\\
+		\hline
+		c$_9$ & 340e0c040a550c1100482c4b0110450d1b4e1713185414181511071b071c4f0101\\
+		p$_9$ & Maybe but I didnt pay attention\\		
+		\hline
+		c$_{10}$ & 2e0a5515071a1b081048170e04154d1a4f020e0115111b4c151b492107184e5201\\
+		p$_{10}$ & We should really listen to Nikos\\
+		\hline
+		c$_{11}$ & 370e1d4618104e05060d450f0a104f044f080e1c04540205151c061a1a5349484c\\
+		p$_{11}$ & Nah we are doing fine without him\\
+		\hline
+	\end{tabular}
+	\end{center}
+	
+
 	To successfully decipher this, I used crib dragging which has been implemented many times by other programmers online. Here is the website I used specifically: \href{https://toolbox.lotusfa.com/crib_drag/}{https://toolbox.lotusfa.com/crib\_drag/}. This website requires that I input 2 ciphertexts and then some crib words. The latter is rather difficult without the context of the ciphertexts and relies on some probability with you knowing which words to use for the crib; however, given this circumstance, Alice and Bob were likely talking about Nikos since he thinks they were planning behind his back. So with this information, "Nikos" was the initial crib I used. 
 
-	After obtaining the plaintext, I then XOR'd it with the ciphertexts to obtain the key. Then to get the rest of the words I used this XOR calculator \href{http://xor.pw/#}{http://xor.pw/\#} where I changed the input 1 to be ASCII (base 256), input 2 to be hex (base 16), and the output to be ASCII (base 256). I put in the key as input 1, and each of the ciphertexts for input 2 and I got the respective plaintexts. The key is \textit{youfoundthekey!congratulations!!!}. 
+	However, the first two plaintexts do not contain "Nikos" so keeping c$_1$, I cycled through the other ciphertexts until I found that c$_4$'s plaintext p$_4$ contained "Nikos" in it. In the plaintext p$_1$ " Nikos " mapped to "u read" and so my next crib phrase was "you read" and this gave me "of Nikos" in p$_4$. Then using " fun of Nikos " I was able to continually build upon each of the two plain texts until I arrived at their full messages as seen above.
+
+	After decoding p$_1$ and p$_4$, I then used this XOR calculator \href{http://xor.pw/#}{http://xor.pw/\#} to obtain the key. I changed the input 1 to be ASCII (base 256), input 2 to be Hex (base 16), and the output to be ASCII (base 256). With p$_1$ as input 1 and c$_1$ as input 2, my output was $\text{k} = youfoundthekey!congratulations!!!$. Using k as my input 1, I then changed the input 2 to be the various ciphertexts c$_2$, c$_3$, and c$_5$ through c$_{11}$ to which I found their respective plaintexts. I did not need to run the key through c$_4$ because I already found it's respective plaintext.
+
+	% After obtaining the plaintext p$_1$ which is "Testing testing can you read this"
+
+	% After obtaining the plaintext, I then XOR'd it with the ciphertexts to obtain the key. Then to get the rest of the words I used this XOR calculator \href{http://xor.pw/#}{http://xor.pw/\#} where I changed the input 1 to be ASCII (base 256), input 2 to be hex (base 16), and the output to be ASCII (base 256). I put in the key as input 1, and each of the ciphertexts for input 2 and I got the respective plaintexts. The key is \textit{youfoundthekey!congratulations!!!}. 
 
 \end{document}
